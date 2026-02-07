@@ -1,248 +1,213 @@
-# 📊 Telecom Customer Churn Analysis & Prediction
+---
 
-**SQL | Power BI | Machine Learning**
+# 📊 Telecom Customer Churn Analysis & Business Insights (Power BI)
+
+## 🔹 Project Overview
+
+Customer churn is one of the most critical challenges in the telecom industry. Losing customers directly impacts revenue, especially when high-usage and high-value customers churn.
+
+This project focuses on **analyzing customer churn behavior using descriptive and diagnostic analytics**, identifying key churn drivers, and translating insights into **actionable business recommendations** using **Power BI**.
+
+The goal is **not prediction**, but to answer:
+
+* *Who is churning?*
+* *Why are they churning?*
+* *What actions should the business take right now?*
 
 ---
 
-## 🔍 Project Overview
+## 🔹 Business Problem
 
-Customer churn is a major revenue risk for telecom companies.
-This project addresses churn from a **business-first perspective**, combining:
+Telecom companies face difficulty in:
 
-1. **Churn analysis & segmentation** (Why customers churn)
-2. **Churn prediction using ML** (Who is likely to churn next)
+* Identifying early signs of customer churn
+* Understanding whether churn is driven by **usage, pricing, service issues, or plans**
+* Prioritizing **high-risk, high-value customers** for retention
 
-Instead of jumping directly to machine learning, this project follows how **real companies work**:
-👉 *Understand the problem → segment customers → then predict churn.*
-
----
-
-## 🎯 Business Problem
-
-Telecom companies struggle to:
-
-* Identify **early warning signs** of churn
-* Understand **which customers are high-value but at risk**
-* Decide **where to focus retention efforts**
-
-The goal is not just to predict churn, but to:
-
-* Explain **why churn happens**
-* Identify **actionable customer segments**
-* Support **data-driven retention strategies**
+Without clear insights, retention strategies become reactive instead of proactive.
 
 ---
 
-## 🧠 Real-World Approach (Why This Project Is Different)
+## 🔹 Dataset Description
 
-Most academic projects:
+**Source:** Telecom customer usage dataset
+**Records:** 10,000 customers
+**Target Variable:** `churn` (0 = Retained, 1 = Churned)
 
-* Jump straight to churn prediction
-* Ignore business context
-* Produce scores without actions
+### Key Available Columns
 
-**This project follows industry practice:**
+* Customer behavior:
+  `day_mins`, `eve_mins`, `night_mins`, `intl_mins`
+* Charges:
+  `day_charge`, `eve_charge`, `night_charge`, `intl_charge`
+* Service experience:
+  `customer_calls`
+* Plan information:
+  `intl_plan`, `voice_plan`
+* Geography:
+  `state`
+* Account details:
+  `account_length`
 
+> Note: Revenue is not explicitly provided. **Charges are used as a proxy for customer value**, which is common in telecom analytics.
+
+---
+
+## 🔹 Tools & Technologies
+
+* **SQL Server** – Data storage & querying
+* **Power BI** – Data modeling, DAX, and dashboarding
+* **DAX** – KPI and churn metrics
+* **Data Analysis** – Descriptive & diagnostic analytics
+
+---
+
+## 🔹 Key Metrics (DAX Measures)
+
+* **Total Customers**
+* **Churned Customers**
+* **Churn Rate %**
+* **Average Customer Service Calls**
+* **Average Usage (Minutes)**
+* **Average Charges (Total & International)**
+
+Example:
+
+```DAX
+Churn Rate % =
+DIVIDE([Churned Customers], [Total Customers], 0)
 ```
-Churn Analysis → Customer Segmentation → Churn Prediction → Business Action
-```
 
 ---
 
-## 📁 Project Structure
+## 🔹 Dashboard Structure
 
-```
-Telecom-Churn/
-│
-├── churn-analysis-dashboard/
-│   ├── PowerBI_Dashboard.pbix
-│   └── Screenshots/
-│
-├── churn-prediction-model/
-│   ├── data_preprocessing.py
-│   ├── model_training.py
-│   ├── evaluation.py
-│   └── app.py (Streamlit)
-│
-├── data/
-│   └── telecom_data.csv
-│
-└── README.md
-```
+The analysis is organized into **three clear analytical pages**.
 
 ---
 
-## 📊 Part 1: Churn Analysis & Segmentation (SQL + Power BI)
+## 📄 Page 1 – Executive Overview
 
-### 🔹 Data Understanding
+**Purpose:**
+Provide a high-level snapshot of churn for leadership and stakeholders.
 
-The dataset contains:
+### Visuals Included
 
-* Customer usage (day / evening / night minutes)
-* Billing charges (used as **revenue proxy**)
-* Customer service calls
-* Plan details (international plan)
-* Churn flag (0 = retained, 1 = churned)
+* KPI cards (Total Customers, Churn Rate, Churned Customers, Avg Calls)
+* Customer base split (Retained vs Churned)
+* Customer service calls vs churn
+* International plan vs churn
+* Churn rate by state
 
-> **Note:** Revenue is derived using charge variables, which reflects real telecom billing logic.
+### Key Insights
 
----
-
-### 📄 Dashboard Structure
-
-#### **Page 1 – Executive Overview**
-
-**Purpose:** Understand churn impact at a glance
-
-* Total Customers
-* Churn Rate (~14%)
-* Churned vs Retained distribution
-* Initial churn signals
-
-👉 Answers: *“Is churn a problem?”*
+* Overall churn rate is **14.14%**
+* Customers with **international plans churn more**
+* Churn varies significantly by **state**
+* Customer service calls show a strong relationship with churn
 
 ---
 
-#### **Page 2 – Behavioral & Financial Drivers**
+## 📄 Page 2 – Usage, Charges & Service Behavior
 
-**Purpose:** Explain *why* churn happens
+**Purpose:**
+Diagnose *why* customers churn by analyzing behavior patterns.
 
-Key insights:
+### Visuals Included
 
-* Churned customers are **high-usage and high-value**
-* Churn increases sharply after **4+ customer service calls**
-* International plan users show higher churn
-* Churn is driven more by **service experience than low usage**
+* Avg total usage by churn status
+* Avg total charges by churn status
+* Avg international charges by churn status
+* Day vs Evening vs Night usage comparison
+* Customer service calls vs churn rate
 
-👉 This page forms the **segmentation logic**
+### Key Insights
+
+* Churned customers often:
+
+  * Use **more minutes**
+  * Generate **higher charges**
+* Churn is **not driven by low usage**
+* Churn rate increases sharply after **4+ customer service calls**
+* Service experience is a stronger churn driver than usage volume
 
 ---
 
-#### **Page 3 – Business Insights & Recommendations**
+## 📄 Page 3 – Business Insights & Recommendations
 
-**Purpose:** Translate analysis into actions
+**Purpose:**
+Translate analytics into **business decisions and actions**.
 
-**Key churn drivers**
+### Key Churn Drivers Identified
 
-* High customer service calls
-* High usage & charges
-* International calling plans
+* High number of customer service calls
+* High-usage and high-charge customers
+* International calling plan users
 
-**High-risk customer profile**
+### High-Risk Customer Profile
 
-* 4+ service calls
-* High total minutes
+Customers most likely to churn:
+
+* 4+ customer service calls
+* High total usage (minutes)
 * Higher average charges
-* Active international plan
+* Active international calling plan
 
-**Recommended actions**
+### Recommended Business Actions
 
-* Trigger retention workflows after 3 service calls
-* Targeted offers for international plan users
-* Early-warning churn flags in CRM
+1. **Improve Customer Support**
 
----
+   * Trigger retention workflows after 3 service calls
+   * Prioritize high-value customers
 
-## 🧩 Customer Segmentation (Business-Driven)
+2. **Targeted Retention Offers**
 
-Instead of clustering blindly, segmentation is based on **actionable business rules**:
+   * Discounts for international plan users
+   * Proactive outreach before churn occurs
 
-### 1️⃣ Service-Based Segmentation
+3. **Early Warning System**
 
-* 0–1 calls → Low risk
-* 2–3 calls → Medium risk
-* 4+ calls → High risk
-
-### 2️⃣ Value-Based Segmentation
-
-* High usage & high charges → High-value customers
-* Low usage & low charges → Low-value customers
-
-### 3️⃣ Plan-Based Segmentation
-
-* International plan users vs non-international users
-
-These segments are:
-
-* Easy to explain
-* Easy to implement
-* Trusted by business teams
+   * Monitor service calls, usage, and plans
+   * Flag high-risk customers in CRM systems
 
 ---
 
-## 🤖 Part 2: Churn Prediction (Machine Learning)
+## 🔹 Business Impact
 
-After identifying churn drivers and segments, a **churn prediction model** was built.
+This analysis helps telecom teams:
 
-### 🔹 Model Highlights
-
-* Handled class imbalance using **SMOTE**
-* Trained models including **XGBoost**
-* Achieved high accuracy and recall on churned customers
-* Deployed using **Streamlit** for interactive predictions
-
-### 🔹 Why Prediction Comes Second
-
-Segmentation insights were used to:
-
-* Guide feature selection
-* Interpret model outputs
-* Align predictions with business actions
-
-> *Prediction prioritizes customers within known risk segments.*
+* Identify churn **before it happens**
+* Focus retention efforts on **high-value customers**
+* Reduce revenue loss caused by avoidable churn
+* Align analytics with **real business decisions**
 
 ---
 
-## 🔗 How Both Parts Work Together
+## 🔹 How This Project Fits a Real Company
 
-**Churn Analysis & Segmentation**
+This project mirrors real-world workflows:
 
-* Explains *why* customers churn
-* Defines high-risk behavioral patterns
+* Analytics team → identifies churn drivers
+* Business team → applies retention strategies
+* ML team → later builds churn prediction models
 
-**Churn Prediction**
-
-* Identifies *who* will churn next
-* Helps prioritize retention efforts
-
-Together, they form a **complete churn management system**.
+This dashboard would typically be used **before** deploying predictive models.
 
 ---
 
-## 🧠 Key Takeaways
+## 🔹 Future Enhancements
 
-* Churn is driven by **customer experience**, not low usage
-* High-value customers are at significant churn risk
-* Segmentation is more trusted than black-box models
-* Prediction works best **after** understanding behavior
-
----
-
-## 🛠️ Tools Used
-
-* SQL Server
-* Power BI
-* Python (Pandas, Scikit-learn, XGBoost)
-* Streamlit
+* Integrate churn prediction models (Logistic Regression / XGBoost)
+* Build customer segmentation based on behavior
+* Automate refresh using live database connectors
+* Add cohort-based churn analysis
 
 ---
 
-## 📌 Final Note
-
-This project demonstrates:
-
-* Business-first thinking
-* End-to-end analytics workflow
-* Practical integration of BI and ML
-* Decision-oriented data analysis
-
----
-
-## 📬 Contact
+## 🔹 Author
 
 **Sampath**
-Aspiring Data Analyst / Data Scientist
-📧 Email: *sampath967610@gmail.com*
-🔗 LinkedIn: *www.linkedin.com/in/sampath-kumar-panthagani-2147a6250*
+Data Science & Analytics
+Project: Telecom Customer Churn Analysis
 
 ---
