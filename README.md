@@ -211,5 +211,9 @@ This dashboard would typically be used **before** deploying predictive models.
 Data Science & Analytics
 Project: Telecom Customer Churn Analysis
 
+📌 Note: Power BI Service publishing requires a work account. 
+This project is shared via screenshots and PBIX file for full review.
+
+
 ---
 
